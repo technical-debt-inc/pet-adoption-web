@@ -1,26 +1,383 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * PetAdopt — globals.css  (shadcn + Tailwind v4)
+ *
+ * Dark mode via next-themes — configure com:
+ *   <ThemeProvider attribute="class" defaultTheme="light" storageKey="petadopt-theme">
+ *
+ * Fonte: adicione no layout.tsx via next/font/local (PlusJakartaSans-*.ttf)
+ * e passe a variable --font-plus-jakarta.
+ * No body do layout: className={`${plusJakarta.variable}`}
+ */
 
+/* dark variant shadcn-style */
+@custom-variant dark (&:is(.dark *));
+
+/* =====================================================================
+   @theme inline — expõe variáveis como classes Tailwind
+   ===================================================================== */
 @theme inline {
+  /* ---- Shadcn semantic → Tailwind ---- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* ---- PetAdopt: paleta raw → bg-green-500, text-ink-900, etc. ---- */
+  --color-green-050: oklch(0.97 0.01 155);
+  --color-green-100: oklch(0.94 0.03 155);
+  --color-green-300: oklch(0.77 0.1 155);
+  --color-green-400: oklch(0.66 0.14 155);
+  --color-green-500: oklch(0.58 0.15 155); /* #1BA075 */
+  --color-green-600: oklch(0.47 0.12 155);
+  --color-green-700: oklch(0.41 0.1 155);
+  --color-purple-100: oklch(0.94 0.03 295);
+  --color-purple-500: oklch(0.55 0.18 295);
+  --color-purple-600: oklch(0.46 0.18 295);
+  --color-ink-300: oklch(0.72 0.01 155);
+  --color-ink-500: oklch(0.5 0.02 155);
+  --color-ink-700: oklch(0.27 0.02 155);
+  --color-ink-900: oklch(0.12 0.02 155);
+  --color-dark-700: oklch(0.2 0.02 155);
+  --color-dark-800: oklch(0.14 0.02 155);
+  --color-dark-900: oklch(0.09 0.01 155);
+  --color-line: oklch(0.91 0.006 155);
+
+  /* ---- PetAdopt: tokens semânticos → bg-brand, text-brand-text, etc. ---- */
+  --color-brand: var(--brand-accent);
+  --color-brand-hover: var(--brand-accent-hover);
+  --color-brand-weak: var(--brand-accent-weak);
+  --color-brand-text: var(--brand-accent-text);
+  --color-brand-contrast: var(--brand-accent-contrast);
+
+  /* ---- Fonte ---- */
+  --font-sans: var(--font-plus-jakarta-sans, system-ui, -apple-system, sans-serif);
+  --font-heading: var(
+    --font-plus-jakarta-sans,
+    system-ui,
+    -apple-system,
+    sans-serif
+  );
+
+  /* ---- Raios ---- */
+  --radius-sm: calc(var(--radius) * 0.5); /* ~8px  */
+  --radius-md: calc(var(--radius) * 0.75); /* ~12px */
+  --radius-lg: var(--radius); /* 16px  */
+  --radius-xl: calc(var(--radius) * 1.5); /* ~24px */
+  --radius-2xl: calc(var(--radius) * 1.875);
+  --radius-3xl: calc(var(--radius) * 2.25);
+  --radius-4xl: calc(var(--radius) * 2.625);
+  --radius-pill: 999px;
+
+  /* ---- Sombras ---- */
+  --shadow-sm: var(--ds-shadow-sm);
+  --shadow-md: var(--ds-shadow-md);
+  --shadow-lg: var(--ds-shadow-lg);
+  --shadow-focus: var(--ds-shadow-focus);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =====================================================================
+   LIGHT THEME (padrão)
+   ===================================================================== */
+:root {
+  /* shadcn semantic — mapeados para PetAdopt */
+  --background: oklch(0.96 0 0); /* surface-1  #F3F3F3   */
+  --foreground: oklch(0.12 0.02 155); /* ink-900    #14201B   */
+  --card: oklch(1 0 0); /* surface-2  #FFFFFF   */
+  --card-foreground: oklch(0.12 0.02 155);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.02 155);
+  --primary: oklch(0.58 0.15 155); /* green-500  #1BA075   */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.97 0.01 155); /* green-050  #EEF8F4   */
+  --secondary-foreground: oklch(0.41 0.1 155); /* green-700            */
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.5 0.02 155); /* ink-500    #6B7A73   */
+  --accent: oklch(0.94 0.03 155); /* green-100  #DCF2EA   */
+  --accent-foreground: oklch(0.41 0.1 155); /* green-700            */
+  --destructive: oklch(0.577 0.245 27.325); /* danger     #E5484D   */
+  --border: oklch(0.91 0.006 155); /* line       #E4E7E5   */
+  --input: oklch(0.91 0.006 155);
+  --ring: oklch(0.58 0.15 155);
+  --radius: 1rem; /* base = 16px          */
+
+  /* Sidebar */
+  --sidebar: oklch(0.97 0 0);
+  --sidebar-foreground: oklch(0.12 0.02 155);
+  --sidebar-primary: oklch(0.58 0.15 155);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.94 0.03 155);
+  --sidebar-accent-foreground: oklch(0.41 0.1 155);
+  --sidebar-border: oklch(0.91 0.006 155);
+  --sidebar-ring: oklch(0.58 0.15 155);
+
+  /* Charts */
+  --chart-1: oklch(0.58 0.15 155); /* brand green */
+  --chart-2: oklch(0.55 0.18 295); /* brand purple */
+  --chart-3: oklch(0.47 0.12 155);
+  --chart-4: oklch(0.72 0.14 70); /* amber */
+  --chart-5: oklch(0.27 0.02 155);
+
+  /* =================================================================
+     PetAdopt extras — variáveis que não existem no shadcn
+     Use estes nas telas em vez dos raw acima.
+     ================================================================= */
+  --green-700: oklch(0.41 0.1 155);
+  --green-600: oklch(0.47 0.12 155);
+  --green-500: oklch(0.58 0.15 155);
+  --green-400: oklch(0.66 0.14 155);
+  --green-300: oklch(0.77 0.1 155);
+  --green-100: oklch(0.94 0.03 155);
+  --green-050: oklch(0.97 0.01 155);
+  --purple-600: oklch(0.46 0.18 295);
+  --purple-500: oklch(0.55 0.18 295);
+  --purple-100: oklch(0.94 0.03 295);
+  --ink-900: oklch(0.12 0.02 155);
+  --ink-700: oklch(0.27 0.02 155);
+  --ink-500: oklch(0.5 0.02 155);
+  --ink-300: oklch(0.72 0.01 155);
+  --line: oklch(0.91 0.006 155);
+  --surface-2: oklch(1 0 0);
+  --surface-1: oklch(0.96 0 0);
+  --dark-900: oklch(0.09 0.01 155);
+  --dark-800: oklch(0.14 0.02 155);
+  --dark-700: oklch(0.2 0.02 155);
+  --on-dark-2: oklch(0.73 0.04 155);
+  --danger: oklch(0.577 0.245 27.325);
+  --warning: oklch(0.72 0.14 70);
+
+  /* Tipografia */
+  --text-display: 56px;
+  --text-h1: 40px;
+  --text-h2: 30px;
+  --text-h3: 22px;
+  --text-title: 18px;
+  --text-body: 16px;
+  --text-sm: 14px;
+  --text-xs: 12px;
+  --lh-tight: 1.1; /* @kind font */
+  --lh-snug: 1.25; /* @kind font */
+  --lh-normal: 1.5; /* @kind font */
+  --fw-regular: 400; /* @kind font */
+  --fw-medium: 500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold: 700; /* @kind font */
+  --fw-extrabold: 800; /* @kind font */
+
+  /* Raios */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* Espaçamento (base 4pt) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* Sombras */
+  --ds-shadow-sm: 0 1px 2px oklch(0.12 0.02 155 / 6%);
+  --ds-shadow-md: 0 4px 16px oklch(0.12 0.02 155 / 8%);
+  --ds-shadow-lg: 0 12px 32px oklch(0.12 0.02 155 / 12%);
+  --ds-shadow-focus: 0 0 0 4px oklch(0.58 0.15 155 / 18%);
+
+  /* Tokens semânticos PetAdopt */
+  --bg: var(--surface-1);
+  --surface: var(--surface-2);
+  --surface-raised: var(--surface-2);
+  --surface-sunken: var(--surface-1);
+  --text-primary: var(--ink-900);
+  --text-muted: var(--ink-700);
+  --text-subtle: var(--ink-500);
+  --text-faint: var(--ink-300);
+  --brand-accent: var(--green-500);
+  --brand-accent-hover: var(--green-600);
+  --brand-accent-weak: var(--green-100);
+  --brand-accent-faint: var(--green-050);
+  --brand-accent-text: var(--green-700);
+  --brand-accent-contrast: oklch(1 0 0);
+  --status-adopted: var(--purple-500);
+  --status-adopted-weak: var(--purple-100);
+  --status-adopted-text: var(--purple-600);
+}
+
+/* =====================================================================
+   DARK THEME
+   Suporta .dark (shadcn/next-themes) e [data-theme="dark"] (kits HTML)
+   ===================================================================== */
+.dark,
+[data-theme="dark"] {
+  --background: oklch(0.09 0.01 155); /* #0C140F */
+  --foreground: oklch(0.95 0.01 155); /* #EEF3F0 */
+  --card: oklch(0.14 0.02 155); /* #16221C */
+  --card-foreground: oklch(0.95 0.01 155);
+  --popover: oklch(0.18 0.02 155);
+  --popover-foreground: oklch(0.95 0.01 155);
+  --primary: oklch(0.68 0.14 155); /* #34B98C */
+  --primary-foreground: oklch(0.07 0.02 155);
+  --secondary: oklch(0.22 0.02 155); /* #27352E */
+  --secondary-foreground: oklch(0.95 0.01 155);
+  --muted: oklch(0.14 0.02 155);
+  --muted-foreground: oklch(0.65 0.02 155); /* #8FA399 */
+  --accent: oklch(0.68 0.14 155 / 18%);
+  --accent-foreground: oklch(0.82 0.08 155); /* #8BD9BC */
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.22 0.02 155);
+  --input: oklch(0.22 0.02 155 / 15%);
+  --ring: oklch(0.68 0.14 155);
+  --green-700: oklch(0.82 0.08 155);
+  --green-600: oklch(0.73 0.12 155);
+  --green-500: oklch(0.68 0.14 155);
+  --green-400: oklch(0.73 0.12 155);
+  --green-100: oklch(0.68 0.14 155 / 18%);
+  --green-050: oklch(0.68 0.14 155 / 10%);
+  --purple-600: oklch(0.76 0.1 295);
+  --purple-500: oklch(0.61 0.16 295);
+  --purple-100: oklch(0.61 0.16 295 / 20%);
+  --ink-900: oklch(0.95 0.01 155);
+  --ink-700: oklch(0.83 0.02 155);
+  --ink-500: oklch(0.65 0.02 155);
+  --ink-300: oklch(0.46 0.02 155);
+  --line: oklch(0.22 0.02 155);
+  --surface-2: oklch(0.14 0.02 155);
+  --surface-1: oklch(0.09 0.01 155);
+  --dark-900: oklch(0.07 0.01 155);
+  --dark-800: oklch(0.14 0.02 155);
+  --dark-700: oklch(0.2 0.02 155);
+  --ds-shadow-sm: 0 1px 2px oklch(0 0 0 / 45%);
+  --ds-shadow-md: 0 6px 18px oklch(0 0 0 / 50%);
+  --ds-shadow-lg: 0 16px 38px oklch(0 0 0 / 60%);
+  --ds-shadow-focus: 0 0 0 4px oklch(0.68 0.14 155 / 30%);
+  --bg: var(--surface-1);
+  --surface: var(--surface-2);
+  --surface-raised: oklch(0.18 0.02 155);
+  --surface-sunken: var(--surface-1);
+  --text-primary: var(--ink-900);
+  --text-muted: var(--ink-700);
+  --text-subtle: var(--ink-500);
+  --text-faint: var(--ink-300);
+  --brand-accent: var(--green-500);
+  --brand-accent-hover: var(--green-600);
+  --brand-accent-weak: var(--green-100);
+  --brand-accent-faint: var(--green-050);
+  --brand-accent-text: var(--green-700);
+  --brand-accent-contrast: oklch(0.07 0.02 155);
+  --status-adopted: var(--purple-500);
+  --status-adopted-weak: var(--purple-100);
+  --status-adopted-text: var(--purple-600);
+  --sidebar: oklch(0.14 0.02 155);
+  --sidebar-foreground: oklch(0.95 0.01 155);
+  --sidebar-primary: oklch(0.68 0.14 155);
+  --sidebar-primary-foreground: oklch(0.07 0.02 155);
+  --sidebar-accent: oklch(0.22 0.02 155);
+  --sidebar-accent-foreground: oklch(0.95 0.01 155);
+  --sidebar-border: oklch(0.22 0.02 155);
+  --sidebar-ring: oklch(0.68 0.14 155);
+  --chart-1: oklch(0.68 0.14 155);
+  --chart-2: oklch(0.61 0.16 295);
+  --chart-3: oklch(0.73 0.12 155);
+  --chart-4: oklch(0.72 0.14 70);
+  --chart-5: oklch(0.46 0.02 155);
+  color-scheme: dark;
+}
+
+/* =====================================================================
+   BASE
+   ===================================================================== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-wrap: pretty;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =====================================================================
+   CLASSES DE TIPOGRAFIA UTILITÁRIAS (opcionais)
+   ===================================================================== */
+.ds-display {
+  font-size: var(--text-display);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.02em;
+  line-height: var(--lh-tight);
+}
+.ds-h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.02em;
+  line-height: var(--lh-tight);
+}
+.ds-h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.015em;
+  line-height: var(--lh-snug);
+}
+.ds-h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+  line-height: var(--lh-snug);
+}
+.ds-body {
+  font-size: var(--text-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+}
+.ds-meta {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-subtle);
+}
+.ds-overline {
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
 }
