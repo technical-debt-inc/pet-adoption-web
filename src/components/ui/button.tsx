@@ -10,35 +10,39 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-green-500 text-white hover:bg-green-600",
-        secondary: "bg-green-100 text-green-700 hover:bg-[var(--green-050)]",
-        ghost:
-          "bg-transparent text-ink-700 border border-[var(--line)] hover:bg-surface-1",
-        dark: "bg-surface-2 text-ink-900 border border-[var(--line)]",
+        default: "bg-[var(--green-500)] text-white hover:bg-[var(--green-600)]",
+        secondary: "bg-[var(--green-100)] text-[var(--green-700)] hover:bg-[var(--green-050)]",
+        destructive: "bg-destructive text-white hover:bg-destructive/90",
+        outline:
+          "bg-transparent text-[var(--ink-700)] border border-[var(--line)] hover:bg-[var(--surface-1)]",
+        ghost: "bg-transparent text-[var(--ink-700)] hover:bg-[var(--surface-1)]",
+        link: "bg-transparent text-[var(--green-700)] underline-offset-4 hover:underline",
       },
       size: {
-        sm: "h-[38px] px-4 text-sm gap-1.5",
-        md: "h-11  px-[22px] text-[15px] gap-2",
-        lg: "h-[52px] px-7 text-base gap-2",
+        sm: "h-9 px-4 text-sm gap-1.5",
+        default: "h-11 px-5.5 text-[0.9375rem] gap-2",
+        lg: "h-13 px-7 text-base gap-2",
+        icon: "size-9",
       },
     },
     defaultVariants: {
-      variant: "primary",
-      size: "md",
+      variant: "default",
+      size: "default",
     },
   },
 );
 
 const iconSize = {
   sm: 16,
-  md: 18,
+  default: 18,
   lg: 20,
+  icon: 18,
 } as const;
 
 function Button({
   className,
-  variant = "primary",
-  size = "md",
+  variant = "default",
+  size = "default",
   asChild = false,
   children,
   Icon,
@@ -58,7 +62,7 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
-      {Icon && <Icon size={iconSize[size ?? "md"]} className="size-4" />}
+      {Icon && <Icon size={iconSize[size ?? "default"]} className="size-4" />}
       {children}
     </Comp>
   );
